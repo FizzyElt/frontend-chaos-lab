@@ -1,0 +1,27 @@
+{
+	"name": "front-end-lab",
+	"version": "1.0.0",
+	"description": "",
+	"type": "module",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"packageManager": "pnpm@10.14.0",
+	"devDependencies": {
+		"@biomejs/biome": "^2.1.4",
+		"@module-federation/vite": "^1.7.1",
+		"@types/react": "^19.1.10",
+		"@types/react-dom": "^19.1.7",
+		"@vitejs/plugin-react": "^5.0.0",
+		"typescript": "^5.9.2",
+		"vite": "^7.1.2"
+	},
+	"dependencies": {
+		"effect": "^3.17.7",
+		"react": "^19.1.1",
+		"react-dom": "^19.1.1"
+	}
+}
