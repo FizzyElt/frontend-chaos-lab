@@ -3,7 +3,6 @@ import { type Component, mount } from "svelte";
 
 export const createSvelteComponent = <Props extends Record<string, any>>(
   component: Component<Props>,
-  name: string,
 ) => {
   function SvComponent(props: Props) {
     const ref = useRef<HTMLDivElement>(null);
@@ -21,7 +20,7 @@ export const createSvelteComponent = <Props extends Record<string, any>>(
     return <div ref={ref}></div>;
   }
 
-  SvComponent.displayName = name;
+  SvComponent.displayName = component.name;
 
   return memo(SvComponent);
 };

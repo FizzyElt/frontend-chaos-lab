@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import viteLogo from "/vite.svg";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import Demo from "./svelte-components/Demo";
+import { getGlobalCount, sub } from "./svelte-components/store";
 
 function App() {
   const [count, setCount] = useState(0);
+  const globalCount = useSyncExternalStore(sub, getGlobalCount);
 
   return (
     <>
@@ -25,6 +27,7 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
+        <p>Global Count {globalCount}</p>
         <Demo count={count} />
       </div>
       <p className="read-the-docs">
