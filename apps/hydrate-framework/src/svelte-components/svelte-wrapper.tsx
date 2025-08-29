@@ -1,6 +1,6 @@
 import { memo, useLayoutEffect, useRef } from "react";
 import { type Component, mount } from "svelte";
-import { derived, type Readable, type Writable, writable } from "svelte/store";
+import { type Readable, readonly, type Writable, writable } from "svelte/store";
 
 export const createSvelteComponent = <Props extends Record<string, any>>(
   component: Component<Props>,
@@ -46,7 +46,7 @@ export const createSvelteComponentStore = <Props extends Record<string, any>>(
         mount(component, {
           target: ref.current,
           props: {
-            props: derived(propsRef.current, (v) => v),
+            props: readonly(propsRef.current),
           },
         });
       }
