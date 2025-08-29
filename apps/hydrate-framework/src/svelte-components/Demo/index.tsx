@@ -1,6 +1,6 @@
-import { createSvelteComponent } from "../svelte-wrapper";
+import { createSvelteComponentStore } from "../svelte-wrapper";
 import Demo from "./Demo.svelte";
 
-const ReactDemo = createSvelteComponent(Demo);
+const ReactDemo = createSvelteComponentStore(Demo);
 
 export default ReactDemo;

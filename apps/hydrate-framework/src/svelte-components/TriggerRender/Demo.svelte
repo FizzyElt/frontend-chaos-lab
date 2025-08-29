@@ -1,14 +1,9 @@
 <script lang="ts">
-  import type { Readable } from 'svelte/store';
   import svelteLogo from '../../assets/svelte.svg';
   import { globalCount } from '../store';
 
-  let {
-    props: cprops,
-  }: { props: Readable<{ count: number; setCount: (updater: (v: number) => number) => void }> } =
+  let { count, setCount }: { count: number; setCount: (updater: (v: number) => number) => void } =
     $props();
-
-  const { count, setCount } = $derived($cprops);
 
   let internalCount = $state(0);
 

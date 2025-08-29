@@ -1,41 +1,47 @@
-import { useState, useSyncExternalStore } from "react";
-import viteLogo from "/vite.svg";
+import { useState } from "react";
+
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import Demo from "./svelte-components/Demo";
-import SyncWithContext from "./svelte-components/SyncWithContext";
-import { getGlobalCount, sub } from "./svelte-components/store";
+import { useGlobalCount } from "./svelte-components/store";
+import TriggerRender from "./svelte-components/TriggerRender";
 
 function App() {
   const [count, setCount] = useState(0);
-  const globalCount = useSyncExternalStore(sub, getGlobalCount);
+  const [globalCount, setGlobalCount] = useGlobalCount();
+  const [passCount, setPassCount] = useState(0);
+  const incInternal = () => {
+    setCount((prev) => prev + 1);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+    <div className="wrapper">
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-        <p>Global Count {globalCount}</p>
-        <Demo count={count} />
-        <SyncWithContext count={count} setCount={setCount} />
+        <div>
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </div>
+        <h1>React</h1>
+        <div>
+          <h3>internal count {count}</h3>
+          <button onClick={incInternal}>inc internal</button>
+        </div>
+        <div>
+          <h3>globalCount count {globalCount}</h3>
+          <button onClick={() => setGlobalCount((prev) => prev + 1)}>
+            inc globalCount
+          </button>
+        </div>
+        <div>
+          <h3>props count {passCount}</h3>
+          <button onClick={() => setPassCount((prev) => prev + 1)}>
+            inc props
+          </button>
+        </div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+      <Demo count={passCount} setCount={setPassCount} />
+      <TriggerRender count={passCount} setCount={setPassCount} />
+    </div>
   );
 }
 

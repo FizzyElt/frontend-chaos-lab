@@ -1,18 +1,30 @@
-import { useSyncExternalStore } from "react";
-import { get, type Subscriber, writable } from "svelte/store";
+import { useCallback, useSyncExternalStore } from "react";
+import { get, type Subscriber, type Updater, writable } from "svelte/store";
 
-export const globalCount = writable(0);
-
-export const sub = (callback: Subscriber<number>) => {
-  const unsub = globalCount.subscribe(callback);
-
-  return unsub;
-};
-
-export const getGlobalCount = () => get(globalCount);
-
-export const createBridgeValue = <T>(value: T) => {
+export const createShareValue = <T>(value: T) => {
   const writableValue = writable(value);
+  const sub = (callback: Subscriber<T>) => {
+    const unsub = writableValue.subscribe(callback);
 
-  return writableValue;
+    return unsub;
+  };
+
+  const getter = () => get(writableValue);
+
+  const useStore = () => {
+    const value = useSyncExternalStore(sub, getter);
+
+    const set = useCallback((v: T | Updater<T>) => {
+      if (typeof v === "function") {
+        return writableValue.update(v as Updater<T>);
+      }
+
+      return writableValue.set(v);
+    }, []);
+
+    return [value, set] as const;
+  };
+  return [writableValue, sub, getter, useStore] as const;
 };
+
+export const [globalCount, sub, getter, useGlobalCount] = createShareValue(0);
