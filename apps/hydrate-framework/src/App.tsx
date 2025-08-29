@@ -3,6 +3,7 @@ import viteLogo from "/vite.svg";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import Demo from "./svelte-components/Demo";
+import SyncWithContext from "./svelte-components/SyncWithContext";
 import { getGlobalCount, sub } from "./svelte-components/store";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         </p>
         <p>Global Count {globalCount}</p>
         <Demo count={count} />
+        <SyncWithContext />
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
