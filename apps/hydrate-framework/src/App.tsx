@@ -30,7 +30,7 @@ function App() {
         </p>
         <p>Global Count {globalCount}</p>
         <Demo count={count} />
-        <SyncWithContext />
+        <SyncWithContext count={count} setCount={setCount} />
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more

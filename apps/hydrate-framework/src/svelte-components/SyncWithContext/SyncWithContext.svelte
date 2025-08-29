@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { getContextCount, setContextCount } from '../create-context';
+  import { type Writable } from 'svelte/store';
 
-  setContextCount(0);
-
-  let contextCount = getContextCount();
+  let {
+    props: reactiveProps,
+  }: { props: Writable<{ count: number; setCount: (v: number) => void }> } = $props();
 
   function inc() {
-    contextCount = contextCount + 1;
+    $reactiveProps.setCount($reactiveProps.count + 1);
   }
 </script>
 
-<button onclick={inc}> update context count </button>
-<div>context count {contextCount}</div>
+<button onclick={inc}> update store prop count </button>
+<div>store prop count {$reactiveProps.count}</div>

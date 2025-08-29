@@ -1,5 +1,6 @@
 import { memo, useLayoutEffect, useRef } from "react";
 import { type Component, mount } from "svelte";
+import { type Writable } from "svelte/store";
 import { createBridgeValue } from "./store";
 
 export const createSvelteComponent = <Props extends Record<string, any>>(
@@ -27,7 +28,7 @@ export const createSvelteComponent = <Props extends Record<string, any>>(
 };
 
 export const createSvelteComponentStore = <Props extends Record<string, any>>(
-  component: Component<{ props: Props }>,
+  component: Component<{ props: Writable<Props> }>,
 ) => {
   function SvComponent(props: Props) {
     const ref = useRef<HTMLDivElement>(null);
@@ -39,7 +40,10 @@ export const createSvelteComponentStore = <Props extends Record<string, any>>(
       }
 
       if (ref.current) {
-        mount(component, { target: ref.current, props: { props } });
+        mount(component, {
+          target: ref.current,
+          props: { props: propsRef.current },
+        });
       }
     }, []);
 

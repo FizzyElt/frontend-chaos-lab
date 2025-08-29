@@ -1,6 +1,6 @@
-import { createSvelteComponent } from "../svelte-wrapper";
+import { createSvelteComponentStore } from "../svelte-wrapper";
 import SyncWithContext from "./SyncWithContext.svelte";
 
-const ReactSyncWithContext = createSvelteComponent(SyncWithContext);
+const ReactSyncWithContext = createSvelteComponentStore(SyncWithContext);
 
 export default ReactSyncWithContext;
