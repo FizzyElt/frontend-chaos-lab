@@ -2,14 +2,25 @@ import { useState } from "react";
 
 import reactLogo from "./assets/react.svg";
 import "./App.css";
+import { atom, useAtom } from "jotai";
+
 import Demo from "./svelte-components/Demo";
-import { useGlobalCount } from "./svelte-components/store";
+import {
+  globalJotaiCountAtom,
+  useGlobalCount,
+} from "./svelte-components/store";
 import TriggerRender from "./svelte-components/TriggerRender";
 
 function App() {
   const [count, setCount] = useState(0);
   const [globalCount, setGlobalCount] = useGlobalCount();
   const [passCount, setPassCount] = useState(0);
+
+  const [toggleSvComp, setToggleSvComp] = useState(true);
+  const [toggleSvCompTwo, setToggleSvCompTwo] = useState(true);
+
+  const [jotaiCount, setJotaiCount] = useAtom(globalJotaiCountAtom);
+
   const incInternal = () => {
     setCount((prev) => prev + 1);
   };
@@ -26,6 +37,12 @@ function App() {
           <button onClick={incInternal}>inc internal</button>
         </div>
         <div>
+          <h3>jotai count {jotaiCount}</h3>
+          <button onClick={() => setJotaiCount((p) => p + 1)}>
+            inc internal
+          </button>
+        </div>
+        <div>
           <h3>globalCount count {globalCount}</h3>
           <button onClick={() => setGlobalCount((prev) => prev + 1)}>
             inc globalCount
@@ -39,8 +56,21 @@ function App() {
         </div>
       </div>
 
-      <Demo count={passCount} setCount={setPassCount} />
-      <TriggerRender count={passCount} setCount={setPassCount} />
+      <div style={{ width: "332px" }}>
+        <button onClick={() => setToggleSvComp((p) => !p)}>toggle</button>
+        {toggleSvComp ? (
+          <Demo count={passCount} setCount={setPassCount} />
+        ) : (
+          false
+        )}
+      </div>
+
+      <div style={{ width: "332px" }}>
+        <button onClick={() => setToggleSvCompTwo((p) => !p)}>toggle</button>
+        {toggleSvCompTwo ? (
+          <TriggerRender count={passCount} setCount={setPassCount} />
+        ) : null}
+      </div>
     </div>
   );
 }

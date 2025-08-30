@@ -1,6 +1,6 @@
 <script lang="ts">
   import svelteLogo from '../../assets/svelte.svg';
-  import { globalCount } from '../store';
+  import { globalCount, globalJotaiCount } from '../store';
 
   let { count, setCount }: { count: number; setCount: (updater: (v: number) => number) => void } =
     $props();
@@ -22,6 +22,11 @@
     <h1>Svelte {uid}</h1>
     <h3>internal count {internalCount}</h3>
     <button onclick={incInternal}>inc internal</button>
+  </div>
+
+  <div>
+    <h3>globalJotaiCount count {$globalJotaiCount}</h3>
+    <button onclick={() => globalJotaiCount.update((p) => p + 1)}>inc globalJotaiCount</button>
   </div>
 
   <div>

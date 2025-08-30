@@ -19,8 +19,8 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src/svelte-components/**/*.ts",
-    "src/svelte-components/**/*.js",
+    "src/svelte-components/**/*.svelte.ts",
+    "src/svelte-components/**/*.svelte.js",
     "src/svelte-components/**/*.svelte"
   ]
 }

@@ -1,6 +1,7 @@
 import { memo, useLayoutEffect, useRef } from "react";
 import { type Component, mount } from "svelte";
-import { type Readable, readonly, type Writable, writable } from "svelte/store";
+import { readonly, type Writable, writable } from "svelte/store";
+import { type ReactSvProps } from "./type";
 
 export const createSvelteComponent = <Props extends Record<string, any>>(
   component: Component<Props>,
@@ -27,7 +28,7 @@ export const createSvelteComponent = <Props extends Record<string, any>>(
 };
 
 export const createSvelteComponentStore = <Props extends Record<string, any>>(
-  component: Component<{ props: Readable<Props> }>,
+  component: Component<ReactSvProps<Props>>,
 ) => {
   function SvComponent(props: Props) {
     const ref = useRef<HTMLDivElement>(null);
