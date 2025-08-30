@@ -1,4 +1,4 @@
-import { memo, useLayoutEffect, useRef } from "react";
+import { memo, useEffect, useLayoutEffect, useRef } from "react";
 import { type Component, mount } from "svelte";
 import { readonly, type Writable, writable } from "svelte/store";
 import { type ReactSvProps } from "./type";
@@ -18,6 +18,21 @@ export const createSvelteComponent = <Props extends Record<string, any>>(
         mount(component, { target: ref.current, props });
       }
     }, Object.values(props));
+
+    // tracking
+    useLayoutEffect(() => {
+      const observer = new window.MutationObserver((records) => {
+        console.log("with props deps", records);
+      });
+
+      if (ref.current) {
+        return observer.observe(ref.current, {
+          subtree: true,
+          childList: true,
+          attributes: true,
+        });
+      }
+    }, []);
 
     return <div ref={ref}></div>;
   }
@@ -56,6 +71,21 @@ export const createSvelteComponentStore = <Props extends Record<string, any>>(
     useLayoutEffect(() => {
       propsRef.current?.set(props);
     }, [props]);
+
+    // tracking
+    useLayoutEffect(() => {
+      const observer = new window.MutationObserver((records) => {
+        console.log("with svelte store", records);
+      });
+
+      if (ref.current) {
+        return observer.observe(ref.current, {
+          subtree: true,
+          childList: true,
+          attributes: true,
+        });
+      }
+    }, []);
 
     return <div ref={ref}></div>;
   }
