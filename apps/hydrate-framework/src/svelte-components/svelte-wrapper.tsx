@@ -1,4 +1,4 @@
-import { memo, useEffect, useLayoutEffect, useRef } from "react";
+import { memo, useLayoutEffect, useRef } from "react";
 import { type Component, mount } from "svelte";
 import { readonly, type Writable, writable } from "svelte/store";
 import { type ReactSvProps } from "./type";
