@@ -1,9 +1,12 @@
+// import "./App.css";
+import { useAtom } from "jotai";
 import { useState } from "react";
-
+import { css } from "styled-system/css";
+import { Button } from "~/components/ui/button";
+import { Heading } from "~/components/ui/heading";
+import { Text } from "~/components/ui/text";
 import reactLogo from "./assets/react.svg";
-import "./App.css";
-import { atom, useAtom } from "jotai";
-
+import * as styles from "./style";
 import Demo from "./svelte-components/Demo";
 import {
   globalJotaiCountAtom,
@@ -26,38 +29,87 @@ function App() {
   };
 
   return (
-    <div className="wrapper">
-      <div className="card">
-        <div>
-          <img src={reactLogo} className="logo react" alt="React logo" />
+    <div
+      className={css({
+        display: "flex",
+        justifyContent: "center",
+        columnGap: "20px",
+      })}
+    >
+      <div className={styles.card}>
+        <div className={styles.center}>
+          <img
+            src={reactLogo}
+            className={css(styles.logo, {
+              _hover: {
+                filter: "drop-shadow(0 0 2em #646cffaa)",
+              },
+            })}
+            alt="React logo"
+          />
+          <Heading as="h1" size="2xl" color="white">
+            React
+          </Heading>
         </div>
-        <h1>React</h1>
-        <div>
-          <h3>internal count {count}</h3>
-          <button onClick={incInternal}>inc internal</button>
+        <div
+          className={css(styles.centerBlock, {
+            backgroundColor: "gray.dark.a1",
+          })}
+        >
+          <Text size="lg" className={css({ color: "white" })}>
+            internal count {count}
+          </Text>
+          <Button onClick={incInternal}>inc internal</Button>
         </div>
-        <div>
-          <h3>jotai count {jotaiCount}</h3>
-          <button onClick={() => setJotaiCount((p) => p + 1)}>
+        <div
+          className={css(styles.centerBlock, {
+            backgroundColor: "royalblue",
+          })}
+        >
+          <Text size="lg" className={css({ color: "white" })}>
+            jotai count {jotaiCount}
+          </Text>
+          <Button onClick={() => setJotaiCount((p) => p + 1)}>
             inc internal
-          </button>
+          </Button>
         </div>
-        <div>
-          <h3>globalCount count {globalCount}</h3>
-          <button onClick={() => setGlobalCount((prev) => prev + 1)}>
+        <div
+          className={css(styles.centerBlock, {
+            backgroundColor: "teal",
+          })}
+        >
+          <Text size="lg" className={css({ color: "white" })}>
+            globalCount count {globalCount}
+          </Text>
+          <Button onClick={() => setGlobalCount((prev) => prev + 1)}>
             inc globalCount
-          </button>
+          </Button>
         </div>
-        <div>
-          <h3>props count {passCount}</h3>
-          <button onClick={() => setPassCount((prev) => prev + 1)}>
+        <div
+          className={css(styles.centerBlock, {
+            backgroundColor: "red.dark.a5",
+          })}
+        >
+          <Text size="lg" className={css({ color: "white" })}>
+            props count {passCount}
+          </Text>
+          <Button onClick={() => setPassCount((prev) => prev + 1)}>
             inc props
-          </button>
+          </Button>
         </div>
       </div>
 
-      <div style={{ width: "332px" }}>
-        <button onClick={() => setToggleSvComp((p) => !p)}>toggle</button>
+      <div
+        className={css({
+          width: "332px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        })}
+      >
+        <Button size="sm" onClick={() => setToggleSvComp((p) => !p)}>
+          toggle
+        </Button>
         {toggleSvComp ? (
           <Demo count={passCount} setCount={setPassCount} />
         ) : (
@@ -65,8 +117,17 @@ function App() {
         )}
       </div>
 
-      <div style={{ width: "332px" }}>
-        <button onClick={() => setToggleSvCompTwo((p) => !p)}>toggle</button>
+      <div
+        className={css({
+          width: "332px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        })}
+      >
+        <Button size="sm" onClick={() => setToggleSvCompTwo((p) => !p)}>
+          toggle
+        </Button>
         {toggleSvCompTwo ? (
           <TriggerRender count={passCount} setCount={setPassCount} />
         ) : null}
