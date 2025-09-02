@@ -42,12 +42,12 @@ function App() {
             src={reactLogo}
             className={css(styles.logo, {
               _hover: {
-                filter: "drop-shadow(0 0 2em #646cffaa)",
+                filter: "drop-shadow(0 0 1em #9fa5ffd8)",
               },
             })}
             alt="React logo"
           />
-          <Heading as="h1" size="2xl" color="white">
+          <Heading as="h1" size="3xl" color="white">
             React
           </Heading>
         </div>

@@ -5,6 +5,8 @@ import { Provider } from "jotai";
 import App from "./App";
 import { jotaiStore } from "./jotai-store";
 
+document.documentElement.classList.add("dark");
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={jotaiStore}>

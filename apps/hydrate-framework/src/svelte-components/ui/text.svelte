@@ -1,15 +1,13 @@
 <script lang="ts">
-  import { type SvelteHTMLElements } from 'svelte/elements';
+  import type { HTMLAttributes } from 'svelte/elements';
   import { cx } from '../../../styled-system/css';
   import { type TextVariantProps, text } from '../../../styled-system/recipes/text';
 
-  let {
-    children,
-    variant,
-    size,
-    class: className,
-    ...props
-  }: SvelteHTMLElements['p'] & TextVariantProps & { class?: string } = $props();
+  interface TextProps extends HTMLAttributes<HTMLParagraphElement>, TextVariantProps {
+    class?: string;
+  }
+
+  const { children, variant, size, class: className, ...props }: TextProps = $props();
 </script>
 
 <p class={cx(text({ variant, size }), className)} {...props}>{@render children?.()}</p>

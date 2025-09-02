@@ -1,20 +1,14 @@
 <script lang="ts">
-  import { type SvelteHTMLElements } from 'svelte/elements';
+  import type { HTMLAttributes } from 'svelte/elements';
   import { cx } from '../../../styled-system/css';
   import { type TextVariantProps, text } from '../../../styled-system/recipes/text';
 
-  let {
-    children,
-    variant,
-    size,
-    class: className,
-    as = 'h1',
-    ...props
-  }: SvelteHTMLElements['h1'] &
-    TextVariantProps & {
-      as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-      class?: string;
-    } = $props();
+  interface HeadingProps extends HTMLAttributes<HTMLHeadElement>, TextVariantProps {
+    as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    class?: string;
+  }
+
+  const { children, variant, size, class: className, as = 'h1', ...props }: HeadingProps = $props();
 </script>
 
 {#if as === 'h1'}

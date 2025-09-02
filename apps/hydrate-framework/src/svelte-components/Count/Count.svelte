@@ -29,7 +29,7 @@
       alt=""
       class={css(styles.logo, {
         _hover: {
-          filter: 'drop-shadow(0 0 2em #ff3e00aa)',
+          filter: 'drop-shadow(0 0 1em #ff3e00aa)',
         },
       })}
     />
