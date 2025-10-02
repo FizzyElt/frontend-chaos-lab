@@ -1,8 +1,8 @@
 <script lang="ts">
   import { css } from '../../../styled-system/css';
   import svelteLogo from '../../assets/svelte.svg';
+  import { globalCount, globalJotaiCount } from '../../store';
   import * as styles from '../../style';
-  import { globalCount, globalJotaiCount } from '../store';
   import Button from '../ui/button.svelte';
   import Heading from '../ui/heading.svelte';
 

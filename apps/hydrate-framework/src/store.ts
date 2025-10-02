@@ -1,7 +1,7 @@
 import {
   createShareValue,
   createShareValueWithAtom,
-} from "../bridge/svelte-store";
+} from "./bridge/svelte-store";
 
 export const [globalCount, useGlobalCount] = createShareValue(0);
 

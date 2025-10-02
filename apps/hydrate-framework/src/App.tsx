@@ -6,12 +6,11 @@ import { Button } from "~/components/ui/button";
 import { Heading } from "~/components/ui/heading";
 import { Text } from "~/components/ui/text";
 import reactLogo from "./assets/react.svg";
+import Count from "./solid-components/Count";
+import { globalJotaiCountAtom, useGlobalCount } from "./store";
 import * as styles from "./style";
 import Demo from "./svelte-components/Demo";
-import {
-  globalJotaiCountAtom,
-  useGlobalCount,
-} from "./svelte-components/store";
+
 import TriggerRender from "./svelte-components/TriggerRender";
 
 function App() {
@@ -21,6 +20,7 @@ function App() {
 
   const [toggleSvComp, setToggleSvComp] = useState(true);
   const [toggleSvCompTwo, setToggleSvCompTwo] = useState(true);
+  const [toggleSolidComp, setToggleSolidComp] = useState(true);
 
   const [jotaiCount, setJotaiCount] = useAtom(globalJotaiCountAtom);
 
@@ -130,6 +130,22 @@ function App() {
         </Button>
         {toggleSvCompTwo ? (
           <TriggerRender count={passCount} setCount={setPassCount} />
+        ) : null}
+      </div>
+
+      <div
+        className={css({
+          width: "332px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        })}
+      >
+        <Button size="sm" onClick={() => setToggleSolidComp((p) => !p)}>
+          toggle
+        </Button>
+        {toggleSolidComp ? (
+          <Count count={passCount} setCount={setPassCount} />
         ) : null}
       </div>
     </div>
