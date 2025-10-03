@@ -7,7 +7,11 @@ import { Heading } from "~/components/ui/heading";
 import { Text } from "~/components/ui/text";
 import reactLogo from "./assets/react.svg";
 import Count from "./solid-components/Count";
-import { globalJotaiCountAtom, useGlobalCount } from "./store";
+import {
+  globalJotaiCountAtom,
+  useGlobalCount,
+  useShareStore as useSignalShareStore,
+} from "./store";
 import * as styles from "./style";
 import Demo from "./svelte-components/Demo";
 
@@ -16,6 +20,7 @@ import TriggerRender from "./svelte-components/TriggerRender";
 function App() {
   const [count, setCount] = useState(0);
   const [globalCount, setGlobalCount] = useGlobalCount();
+  const [signalShareCount, setSignalShareCount] = useSignalShareStore();
   const [passCount, setPassCount] = useState(0);
 
   const [toggleSvComp, setToggleSvComp] = useState(true);
@@ -34,6 +39,7 @@ function App() {
         display: "flex",
         justifyContent: "center",
         columnGap: "20px",
+        flexWrap: "wrap",
       })}
     >
       <div className={styles.card}>
@@ -56,9 +62,9 @@ function App() {
             backgroundColor: "gray.dark.a1",
           })}
         >
-          <Text size="lg" className={css({ color: "white" })}>
+          <Heading size="lg" className={css({ color: "white" })}>
             internal count {count}
-          </Text>
+          </Heading>
           <Button onClick={incInternal}>inc internal</Button>
         </div>
         <div
@@ -66,9 +72,9 @@ function App() {
             backgroundColor: "royalblue",
           })}
         >
-          <Text size="lg" className={css({ color: "white" })}>
+          <Heading size="lg" className={css({ color: "white" })}>
             jotai count {jotaiCount}
-          </Text>
+          </Heading>
           <Button onClick={() => setJotaiCount((p) => p + 1)}>
             inc internal
           </Button>
@@ -78,9 +84,9 @@ function App() {
             backgroundColor: "teal",
           })}
         >
-          <Text size="lg" className={css({ color: "white" })}>
+          <Heading size="lg" className={css({ color: "white" })}>
             globalCount count {globalCount}
-          </Text>
+          </Heading>
           <Button onClick={() => setGlobalCount((prev) => prev + 1)}>
             inc globalCount
           </Button>
@@ -90,11 +96,24 @@ function App() {
             backgroundColor: "red.dark.a5",
           })}
         >
-          <Text size="lg" className={css({ color: "white" })}>
+          <Heading size="lg" className={css({ color: "white" })}>
             props count {passCount}
-          </Text>
+          </Heading>
           <Button onClick={() => setPassCount((prev) => prev + 1)}>
             inc props
+          </Button>
+        </div>
+
+        <div
+          className={css(styles.centerBlock, {
+            backgroundColor: "lime.5",
+          })}
+        >
+          <Heading as="h3" size="lg" className={css({ color: "white" })}>
+            signal count {signalShareCount}
+          </Heading>
+          <Button size="sm" onClick={() => setSignalShareCount((p) => p + 1)}>
+            inc prop
           </Button>
         </div>
       </div>

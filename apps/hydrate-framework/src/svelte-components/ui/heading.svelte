@@ -8,7 +8,14 @@
     class?: string;
   }
 
-  const { children, variant, size, class: className, as = 'h1', ...props }: HeadingProps = $props();
+  const {
+    children,
+    variant = 'heading',
+    size,
+    class: className,
+    as = 'h1',
+    ...props
+  }: HeadingProps = $props();
 </script>
 
 {#if as === 'h1'}

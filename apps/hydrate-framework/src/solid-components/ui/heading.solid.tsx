@@ -19,11 +19,13 @@ const Heading = (props: ParentProps<TextProps>) => {
     ["children"],
   );
 
+  const variant = () => headingProps.variant || "heading";
+
   if (headingProps.as === "h2") {
     return (
       <h2
         class={cx(
-          text({ size: headingProps.size, variant: headingProps.variant }),
+          text({ size: headingProps.size, variant: variant() }),
           headingProps.class,
         )}
         {...rest}
@@ -37,7 +39,7 @@ const Heading = (props: ParentProps<TextProps>) => {
     return (
       <h3
         class={cx(
-          text({ size: headingProps.size, variant: headingProps.variant }),
+          text({ size: headingProps.size, variant: variant() }),
           headingProps.class,
         )}
         {...rest}
@@ -51,7 +53,7 @@ const Heading = (props: ParentProps<TextProps>) => {
     return (
       <h4
         class={cx(
-          text({ size: headingProps.size, variant: headingProps.variant }),
+          text({ size: headingProps.size, variant: variant() }),
           headingProps.class,
         )}
         {...rest}
@@ -65,7 +67,7 @@ const Heading = (props: ParentProps<TextProps>) => {
     return (
       <h5
         class={cx(
-          text({ size: headingProps.size, variant: headingProps.variant }),
+          text({ size: headingProps.size, variant: variant() }),
           headingProps.class,
         )}
         {...rest}
@@ -79,7 +81,7 @@ const Heading = (props: ParentProps<TextProps>) => {
     return (
       <h6
         class={cx(
-          text({ size: headingProps.size, variant: headingProps.variant }),
+          text({ size: headingProps.size, variant: variant() }),
           headingProps.class,
         )}
         {...rest}
@@ -92,7 +94,7 @@ const Heading = (props: ParentProps<TextProps>) => {
   return (
     <h1
       class={cx(
-        text({ size: headingProps.size, variant: headingProps.variant }),
+        text({ size: headingProps.size, variant: variant() }),
         headingProps.class,
       )}
       {...rest}

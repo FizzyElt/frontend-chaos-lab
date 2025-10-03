@@ -1,7 +1,7 @@
 <script lang="ts">
   import { css } from '../../../styled-system/css';
   import svelteLogo from '../../assets/svelte.svg';
-  import { globalCount, globalJotaiCount } from '../../store';
+  import { globalCount, globalJotaiCount, setSignalValue, signalGlobalCount } from '../../store';
   import * as styles from '../../style';
   import Button from '../ui/button.svelte';
   import Heading from '../ui/heading.svelte';
@@ -78,6 +78,16 @@
   >
     <Heading as="h3" size="lg" class={css({ color: 'white' })}>props count {count}</Heading>
     <Button size="sm" onclick={() => setCount((p) => p + 1)}>inc prop</Button>
+  </div>
+  <div
+    class={css(styles.centerBlock, {
+      backgroundColor: 'lime.5',
+    })}
+  >
+    <Heading as="h3" size="lg" class={css({ color: 'white' })}
+      >signal count {$signalGlobalCount}</Heading
+    >
+    <Button size="sm" onclick={() => setSignalValue((p) => p + 1)}>inc prop</Button>
   </div>
 </div>
 

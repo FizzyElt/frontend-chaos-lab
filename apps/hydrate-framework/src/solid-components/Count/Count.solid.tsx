@@ -6,8 +6,10 @@ import { type MountableElement, render } from "solid-js/web";
 import { css } from "../../../styled-system/css";
 import solidLogo from "../../assets/solid.svg";
 import {
+  setSignalValue as setShareSignalCount,
   globalCount as shareGlobalCount,
   globalJotaiCount as shareJotaiCount,
+  signalValue as shareSignalCount,
 } from "../../store";
 import * as styles from "../../style";
 import { type ReactSolidProps } from "../types";
@@ -96,6 +98,19 @@ const Count = (wrappedProps: ReactSolidProps<CountProps>) => {
           props count {props().count}
         </Heading>
         <Button size="sm" onclick={() => props().setCount((prev) => prev + 1)}>
+          inc prop
+        </Button>
+      </div>
+
+      <div
+        class={css(styles.centerBlock, {
+          backgroundColor: "lime.5",
+        })}
+      >
+        <Heading as="h3" size="lg" class={css({ color: "white" })}>
+          signal count {shareSignalCount()}
+        </Heading>
+        <Button size="sm" onclick={() => setShareSignalCount((p) => p + 1)}>
           inc prop
         </Button>
       </div>
