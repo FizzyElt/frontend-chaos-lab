@@ -1,6 +1,6 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
 import { federation } from "@module-federation/vite";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -9,6 +9,7 @@ export default defineConfig({
     federation({
       name: "host",
       remotes: {
+        // host 尋找 remote 的路徑
         remote: {
           type: "module",
           name: "remote",
@@ -19,6 +20,7 @@ export default defineConfig({
       },
 
       filename: "remoteEntry.js",
+      // 需共享的程式
       shared: {
         react: {
           singleton: true,
