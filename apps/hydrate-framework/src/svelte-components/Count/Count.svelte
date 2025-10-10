@@ -1,7 +1,13 @@
 <script lang="ts">
   import { css } from '../../../styled-system/css';
   import svelteLogo from '../../assets/svelte.svg';
-  import { globalCount, globalJotaiCount, setSignalValue, signalGlobalCount } from '../../store';
+  import {
+    globalCount,
+    globalJotaiCount,
+    setGlobalJotaiCount,
+    setSignalValue,
+    signalGlobalCount,
+  } from '../../store';
   import * as styles from '../../style';
   import Button from '../ui/button.svelte';
   import Heading from '../ui/heading.svelte';
@@ -33,7 +39,7 @@
         },
       })}
     />
-    <Heading size="2xl" class={css({ color: 'white' })}>Svelte {uid}</Heading>
+    <Heading size="2xl">Svelte {uid}</Heading>
   </div>
 
   <div
@@ -41,9 +47,8 @@
       backgroundColor: 'gray.dark.a1',
     })}
   >
-    <Heading as="h3" size="lg" class={css({ color: 'white' })}
-      >internal count {internalCount}</Heading
-    >
+    <Heading as="h3" size="lg">internal count</Heading>
+    <Heading as="h3" size="xl">{internalCount}</Heading>
     <Button size="sm" onclick={incInternal}>inc internal</Button>
   </div>
 
@@ -52,11 +57,9 @@
       backgroundColor: 'royalblue',
     })}
   >
-    <Heading as="h3" size="lg" class={css({ color: 'white' })}
-      >globalJotaiCount count {$globalJotaiCount}</Heading
-    >
-    <Button size="sm" onclick={() => globalJotaiCount.update((p) => p + 1)}
-      >inc globalJotaiCount</Button
+    <Heading as="h3" size="lg">globalJotaiCount count</Heading>
+    <Heading as="h3" size="xl">{$globalJotaiCount}</Heading>
+    <Button size="sm" onclick={() => setGlobalJotaiCount((p) => p + 1)}>inc globalJotaiCount</Button
     >
   </div>
 
@@ -65,9 +68,8 @@
       backgroundColor: 'teal',
     })}
   >
-    <Heading as="h3" size="lg" class={css({ color: 'white' })}
-      >globalCount count {$globalCount}</Heading
-    >
+    <Heading as="h3" size="lg">globalCount count</Heading>
+    <Heading as="h3" size="xl">{$globalCount}</Heading>
     <Button size="sm" onclick={() => globalCount.update((p) => p + 1)}>inc globalCount</Button>
   </div>
 
@@ -76,7 +78,8 @@
       backgroundColor: 'red.dark.a5',
     })}
   >
-    <Heading as="h3" size="lg" class={css({ color: 'white' })}>props count {count}</Heading>
+    <Heading as="h3" size="lg">props count</Heading>
+    <Heading as="h3" size="xl">{count}</Heading>
     <Button size="sm" onclick={() => setCount((p) => p + 1)}>inc prop</Button>
   </div>
   <div
@@ -84,9 +87,8 @@
       backgroundColor: 'lime.5',
     })}
   >
-    <Heading as="h3" size="lg" class={css({ color: 'white' })}
-      >signal count {$signalGlobalCount}</Heading
-    >
+    <Heading as="h3" size="lg">signal count</Heading>
+    <Heading as="h3" size="xl">{$signalGlobalCount}</Heading>
     <Button size="sm" onclick={() => setSignalValue((p) => p + 1)}>inc prop</Button>
   </div>
 </div>

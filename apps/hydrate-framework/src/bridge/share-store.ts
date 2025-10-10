@@ -1,5 +1,5 @@
-import { atom } from "jotai";
-import { type SetStateAction, useCallback, useSyncExternalStore } from "react";
+import { atom, createStore } from "jotai";
+import { type SetStateAction, useSyncExternalStore } from "react";
 import {
   type Accessor,
   createSignal,
@@ -7,7 +7,13 @@ import {
   observable,
   type Setter,
 } from "solid-js";
-import { get, type Subscriber, type Updater, writable } from "svelte/store";
+import {
+  get,
+  type Readable,
+  type Subscriber,
+  type Updater,
+  writable,
+} from "svelte/store";
 
 export interface Observable<T> {
   subscribe(observer: ObservableObserver<T>): {
@@ -19,57 +25,63 @@ export interface Observable<T> {
 // svelte store base
 export const createShareValue = <T>(value: T) => {
   const writableValue = writable(value);
+
   const sub = (callback: Subscriber<T>) => {
     const unsub = writableValue.subscribe(callback);
 
     return unsub;
   };
 
-  const getter = () => get(writableValue);
+  const getter =
+    <R>(selector?: (v: T) => R) =>
+    () => {
+      const value = get(writableValue);
 
-  const useStore = () => {
-    const value = useSyncExternalStore(sub, getter);
-
-    const set = useCallback((v: SetStateAction<T>) => {
-      if (typeof v === "function") {
-        return writableValue.update(v as Updater<T>);
+      if (selector) {
+        return selector(value);
       }
 
-      return writableValue.set(v);
-    }, []);
+      return value;
+    };
 
-    return [value, set] as const;
+  const setValue = (v: SetStateAction<T>) => {
+    if (typeof v === "function") {
+      return writableValue.update(v as Updater<T>);
+    }
+
+    return writableValue.set(v);
   };
+
+  function useStore(): [T, (v: SetStateAction<T>) => void];
+  function useStore<R>(
+    selector: (v: T) => R,
+  ): [R, (v: SetStateAction<T>) => void];
+  function useStore<R>(selector?: (v: T) => R) {
+    const value = useSyncExternalStore(sub, getter(selector));
+
+    return [value, setValue] as const;
+  }
 
   return [writableValue, useStore] as const;
 };
 
 // jotai base
-export const createShareValueWithAtom = <T>(value: T) => {
-  const writableValue = writable(value);
-  const valueAtom = atom(get(writableValue));
+export const createShareValueWithAtom = <T>(
+  value: T,
+  store: ReturnType<typeof createStore>,
+) => {
+  const valueAtom = atom(value);
 
-  valueAtom.onMount = (setAtom) => {
-    setAtom(get(writableValue));
-
-    return writableValue.subscribe((v) => {
-      setAtom(v);
-    });
+  const shareValue: Readable<T> = {
+    subscribe: (sub: Subscriber<T>) => {
+      sub(store.get(valueAtom));
+      return store.sub(valueAtom, () => sub(store.get(valueAtom)));
+    },
   };
 
-  const deAtom = atom(
-    (get) => get(valueAtom),
-    (_get, _set, update: SetStateAction<T>) => {
-      if (typeof update === "function") {
-        const updater = update as Updater<T>;
-        writableValue.update(updater as Updater<T>);
-        return;
-      }
-      writableValue.set(update);
-    },
-  );
+  const setValue = (f: SetStateAction<T>) => store.set(valueAtom, f);
 
-  return [deAtom, writableValue] as const;
+  return [valueAtom, shareValue, setValue] as const;
 };
 
 // signal base
@@ -91,15 +103,25 @@ export const createShareValueWithSignal = <T>(
     return unsub.unsubscribe;
   };
 
-  const getter = () => signalValue();
+  const getter =
+    <R>(selector?: (v: T) => R) =>
+    () => {
+      const value = signalValue();
 
-  const useStore = () => {
-    const value = useSyncExternalStore(sub, getter);
+      if (selector) {
+        return selector(value);
+      }
 
-    const set: Setter<T> = useCallback(setSignalValue, []);
+      return value;
+    };
 
-    return [value, set] as const;
-  };
+  function useStore(): [T, Setter<T>];
+  function useStore<R>(selector: (v: T) => R): [R, Setter<T>];
+  function useStore<R>(selector?: (v: T) => R) {
+    const value = useSyncExternalStore(sub, getter(selector));
+
+    return [value, setSignalValue] as const;
+  }
 
   return {
     svelteWritableValue: observableSignalValue,
